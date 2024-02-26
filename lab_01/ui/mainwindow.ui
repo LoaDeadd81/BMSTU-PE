@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>800</width>
-    <height>600</height>
+    <height>424</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -17,10 +17,28 @@
    </sizepolicy>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>ПЭ ЛР№1</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QVBoxLayout" name="verticalLayout">
+    <item>
+     <widget class="QLabel" name="label_8">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>16</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>Вариант 3 (равномерный, равномерный)</string>
+      </property>
+     </widget>
+    </item>
     <item>
      <layout class="QGridLayout" name="gridLayout">
       <property name="sizeConstraint">
@@ -37,7 +55,7 @@
          <double>9999999.000000000000000</double>
         </property>
         <property name="value">
-         <double>2.000000000000000</double>
+         <double>5.000000000000000</double>
         </property>
        </widget>
       </item>
@@ -64,7 +82,7 @@
          <double>9999999.000000000000000</double>
         </property>
         <property name="value">
-         <double>100.000000000000000</double>
+         <double>1000.000000000000000</double>
         </property>
        </widget>
       </item>
@@ -103,7 +121,7 @@
          <double>9999999.000000000000000</double>
         </property>
         <property name="value">
-         <double>1.000000000000000</double>
+         <double>2.000000000000000</double>
         </property>
        </widget>
       </item>
@@ -121,7 +139,7 @@
          <double>0.100000000000000</double>
         </property>
         <property name="value">
-         <double>0.000000000000000</double>
+         <double>0.100000000000000</double>
         </property>
        </widget>
       </item>
@@ -139,7 +157,7 @@
          <double>0.100000000000000</double>
         </property>
         <property name="value">
-         <double>0.000000000000000</double>
+         <double>0.100000000000000</double>
         </property>
        </widget>
       </item>
@@ -209,7 +227,7 @@
          </font>
         </property>
         <property name="text">
-         <string>Фактическая</string>
+         <string>Экспериментальная</string>
         </property>
        </widget>
       </item>
@@ -361,6 +379,19 @@
        </widget>
       </item>
      </layout>
+    </item>
+    <item>
+     <spacer name="verticalSpacer">
+      <property name="orientation">
+       <enum>Qt::Vertical</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>20</width>
+        <height>40</height>
+       </size>
+      </property>
+     </spacer>
     </item>
    </layout>
   </widget>

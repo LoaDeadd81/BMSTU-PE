@@ -52,17 +52,24 @@ class LabWindow(QMainWindow):
             y.append(sum(res) / len(res))
             lmbd += lmbd_step
 
-        pg.plot(x, y)
+        window = pg.plot(x, y,
+                         title=f"Зависимость среднего времени пребывания в системе от интенсивности поступления (µ = {mu})")
+        window.setGeometry(100, 100, 800, 600)
+        plot_widget = window.getPlotItem()
+        labelStyle = {'color': '#FFF', 'font-size': '16pt'}
+        plot_widget.getAxis('left').setLabel('Среднеее временя пребывания заявки в системе', **labelStyle)
+        plot_widget.getAxis('bottom').setLabel('Интенсивность поступления заявок λ', **labelStyle)
+
 
     def mu_graph(self):
         mu_l = 1
         mu_r = 10
         mu_step = 0.1
-        mu_d = 0.1
+        mu_d = 0.5
         lmbd = 10
         lmbd_d = 0.1
         mtime = 100
-        cnt = 100
+        cnt = 150
         param = SMOParam(lmbd=lmbd, lmbd_d=lmbd_d, mu=0, mu_d=mu_d, mtime=mtime)
 
         x = []
@@ -81,17 +88,23 @@ class LabWindow(QMainWindow):
             y.append(sum(res) / len(res))
             mu += mu_step
 
-        pg.plot(x, y)
+        window = pg.plot(x, y,
+                         title=f"Зависимость среднего времени пребывания в системе от интенсивности обслуживания (λ = {lmbd})")
+        window.setGeometry(100, 100, 800, 600)
+        plot_widget = window.getPlotItem()
+        labelStyle = {'color': '#FFF', 'font-size': '16pt'}
+        plot_widget.getAxis('left').setLabel('Среднеее временя пребывания заявки в системе', **labelStyle)
+        plot_widget.getAxis('bottom').setLabel('Интенсивность обслуживания заявок µ', **labelStyle)
 
     def ro_graph(self):
-        lmbd_step = 0.05
+        lmbd_step = 0.1
         lmbd_l = lmbd_step
         lmbd_r = 10 + lmbd_step
         lmbd_d = 0.1
         mu = 10
         mu_d = 0.1
         mtime = 100
-        cnt = 50
+        cnt = 100
         param = SMOParam(lmbd=0, lmbd_d=lmbd_d, mu=mu, mu_d=mu_d, mtime=mtime)
 
         x = []
@@ -110,7 +123,13 @@ class LabWindow(QMainWindow):
             y.append(sum(res) / len(res))
             lmbd += lmbd_step
 
-        pg.plot(x, y)
+        window = pg.plot(x, y,
+                         title=f"Зависимость среднего времени пребывания в системе от загрузки системы ρ (µ = {mu}, λ = ({lmbd_l - lmbd_step}, {lmbd_r - lmbd_step})")
+        window.setGeometry(100, 100, 800, 600)
+        plot_widget = window.getPlotItem()
+        labelStyle = {'color': '#FFF', 'font-size': '16pt'}
+        plot_widget.getAxis('left').setLabel('Среднеее временя пребывания заявки в системе', **labelStyle)
+        plot_widget.getAxis('bottom').setLabel('Загрузка системы ρ', **labelStyle)
 
     def get_smo_param(self):
         return SMOParam(lmbd=self.ui.lambdaSP.value(), lmbd_d=self.ui.labdaDeltaSP.value(), mu=self.ui.muSP.value(),
