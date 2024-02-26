@@ -64,12 +64,12 @@ class LabWindow(QMainWindow):
     def mu_graph(self):
         mu_l = 1
         mu_r = 10
-        mu_step = 0.1
-        mu_d = 0.5
+        mu_step = 0.2
+        mu_d = 0.3
         lmbd = 10
         lmbd_d = 0.1
         mtime = 100
-        cnt = 150
+        cnt = 100
         param = SMOParam(lmbd=lmbd, lmbd_d=lmbd_d, mu=0, mu_d=mu_d, mtime=mtime)
 
         x = []
@@ -139,15 +139,16 @@ class LabWindow(QMainWindow):
         ro = param.lmbd / param.mu
         proc_num = param.mtime * min(param.lmbd, param.mu)
         if ro <= 1:
-            avg_sys_t = 1 / param.mu
-        # elif param.mu < 1:
-        #     avg_sys_t = (proc_num + ro - proc_num * ro + 1) / (2 * param.mu)
+            # avg_sys_t = 1 / param.mu
+            avg_sys_t = ro / (1 - ro) / param.lmbd
+            self.ui.avgTExpL.setText(str(round(avg_sys_t, 2)))
         else:
-            tmp_ro = 1 / ro
-            avg_sys_t = (proc_num + tmp_ro - proc_num * tmp_ro + 1) / 2
+            # tmp_ro = 1 / ro
+            # avg_sys_t = (proc_num + tmp_ro - proc_num * tmp_ro + 1) / 2
+            self.ui.avgTExpL.setText("")
 
         self.ui.loadExpL.setText(str(round(ro, 2)))
-        self.ui.avgTExpL.setText(str(round(avg_sys_t, 2)))
+        # self.ui.avgTExpL.setText(str(round(avg_sys_t, 2)))
         self.ui.rExpL.setText(str(round(proc_num, 2)))
 
     def set_fact_res(self, proc_stat: InfQProcessorStats, ftime: float):
