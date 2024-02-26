@@ -27,10 +27,10 @@ class LabWindow(QMainWindow):
 
     def lambda_graph(self):
         lmbd_l = 1
-        lmbd_r = 10
+        lmbd_r = 5
         lmbd_step = 0.1
         lmbd_d = 0.1
-        mu = 10
+        mu = 5
         mu_d = 0.1
         mtime = 100
         cnt = 100
@@ -63,10 +63,10 @@ class LabWindow(QMainWindow):
 
     def mu_graph(self):
         mu_l = 1
-        mu_r = 10
-        mu_step = 0.2
-        mu_d = 0.3
-        lmbd = 10
+        mu_r = 5
+        mu_step = 0.05
+        mu_d = 0.1
+        lmbd = 1
         lmbd_d = 0.1
         mtime = 100
         cnt = 100
@@ -74,8 +74,8 @@ class LabWindow(QMainWindow):
 
         x = []
         y = []
-        mu = mu_l
-        while mu < mu_r:
+        mu = mu_r
+        while mu > mu_l:
             param.mu = mu
 
             res = []
@@ -86,7 +86,7 @@ class LabWindow(QMainWindow):
             print(mu / mu_r)
             x.append(mu)
             y.append(sum(res) / len(res))
-            mu += mu_step
+            mu -= mu_step
 
         window = pg.plot(x, y,
                          title=f"Зависимость среднего времени пребывания в системе от интенсивности обслуживания (λ = {lmbd})")
@@ -99,9 +99,9 @@ class LabWindow(QMainWindow):
     def ro_graph(self):
         lmbd_step = 0.1
         lmbd_l = lmbd_step
-        lmbd_r = 10 + lmbd_step
+        lmbd_r = 5 + lmbd_step
         lmbd_d = 0.1
-        mu = 10
+        mu = 5
         mu_d = 0.1
         mtime = 100
         cnt = 100
@@ -124,7 +124,7 @@ class LabWindow(QMainWindow):
             lmbd += lmbd_step
 
         window = pg.plot(x, y,
-                         title=f"Зависимость среднего времени пребывания в системе от загрузки системы ρ (µ = {mu}, λ = ({lmbd_l - lmbd_step}, {lmbd_r - lmbd_step})")
+                         title=f"Зависимость среднего времени пребывания в системе от загрузки системы ρ (µ = {mu}, λ = ({lmbd_l - lmbd_step}, {lmbd_r - lmbd_step}))")
         window.setGeometry(100, 100, 800, 600)
         plot_widget = window.getPlotItem()
         labelStyle = {'color': '#FFF', 'font-size': '16pt'}
