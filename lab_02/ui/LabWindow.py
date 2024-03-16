@@ -70,8 +70,12 @@ class LabWindow(QMainWindow):
                 round(delta_part_linear[i], 2)
             )))
 
+        normalizer = self.get_normalizer()
         self.ui.linNormL.setText(self.linearCFE.get_norm_str())
+        self.ui.linDenormL.setText(self.linearCFE.get_nature_str(normalizer))
+
         self.ui.partLinNormL.setText(self.partLinearCFE.get_norm_str())
+        self.ui.partLinDenormL.setText(self.partLinearCFE.get_nature_str(normalizer))
 
     def lin_check(self):
         data = self.get_check_data()

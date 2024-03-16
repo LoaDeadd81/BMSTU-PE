@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1920</width>
-    <height>1009</height>
+    <height>1018</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -620,7 +620,7 @@
            <double>0.100000000000000</double>
           </property>
           <property name="value">
-           <double>1.000000000000000</double>
+           <double>0.000000000000000</double>
           </property>
          </widget>
         </item>
@@ -650,7 +650,7 @@
            <double>0.100000000000000</double>
           </property>
           <property name="value">
-           <double>1.000000000000000</double>
+           <double>0.000000000000000</double>
           </property>
          </widget>
         </item>
@@ -680,7 +680,7 @@
            <double>0.100000000000000</double>
           </property>
           <property name="value">
-           <double>1.000000000000000</double>
+           <double>0.000000000000000</double>
           </property>
          </widget>
         </item>
@@ -728,7 +728,7 @@
            <double>0.100000000000000</double>
           </property>
           <property name="value">
-           <double>1.000000000000000</double>
+           <double>0.000000000000000</double>
           </property>
          </widget>
         </item>
@@ -967,7 +967,7 @@
      </widget>
     </item>
     <item>
-     <layout class="QGridLayout" name="gridLayout_2" columnstretch="0,1,0">
+     <layout class="QGridLayout" name="gridLayout_2" columnstretch="0,1">
       <property name="sizeConstraint">
        <enum>QLayout::SetMinimumSize</enum>
       </property>

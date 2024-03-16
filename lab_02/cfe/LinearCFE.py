@@ -1,5 +1,7 @@
 from statistics import mean
 
+from lab_02.cfe.Normalizer import Normalizer
+
 
 class LinearCFE:
     def __init__(self, factor_num: int):
@@ -55,6 +57,19 @@ class LinearCFE:
                 res += f" + {round(self.b[i], 2)}*{self.alias[i - 1]}"
             else:
                 res += f" - {round(abs(self.b[i]), 2)}*{self.alias[i - 1]}"
+        return res
+
+    def get_nature_str(self, normalizer: Normalizer) -> str:
+        res = f"{round(self.b[0], 2)}"
+
+        for i in range(1, self.factor_num + 1):
+            val = normalizer.denormalize(i - 1, self.b[i])
+
+            if val > 0:
+                res += f" + {round(val, 2)}*{self.alias[i - 1]}"
+            else:
+                res += f" - {round(abs(val), 2)}*{self.alias[i - 1]}"
+
         return res
 
     def get_y(self, data: list[float]) -> float:

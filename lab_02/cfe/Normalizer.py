@@ -9,3 +9,16 @@ class Normalizer:
 
     def denormalize(self, i: int, value: float) -> float:
         return value * self.intervals[i] + self.zeros[i]
+
+    def denormalize_comb(self, comb: list[int], value: float) -> float:
+        l = 1
+        for i in comb:
+            l *= self.data[i][0]
+        r = 1
+        for i in comb:
+            r *= self.data[i][1]
+
+        zero = (l + r) / 2
+        interval = (r - l) / 2
+
+        return value * interval + zero
