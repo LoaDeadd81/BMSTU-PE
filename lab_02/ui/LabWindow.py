@@ -1,4 +1,4 @@
-from PyQt5.QtWidgets import QMainWindow, QTableWidgetItem
+from PyQt5.QtWidgets import QMainWindow, QTableWidgetItem, QMessageBox
 
 from lab_02.cfe.LinearCFE import LinearCFE
 from lab_02.cfe.Normalizer import Normalizer
@@ -24,78 +24,102 @@ class LabWindow(QMainWindow):
         self.ui.checkPartLinPB.clicked.connect(self.part_lin_check)
 
     def count(self):
-        matrix = self.partLinearCFE.get_matrix()
-        y = self.get_y(matrix)
+        try:
+            matrix = self.partLinearCFE.get_matrix()
+            y = self.get_y(matrix)
 
-        self.linearCFE.count_b(y)
-        self.partLinearCFE.count_b(y)
+            self.linearCFE.count_b(y)
+            self.partLinearCFE.count_b(y)
 
-        y_linear = self.linearCFE.count_y()
-        y_part_linear = self.partLinearCFE.count_y()
+            y_linear = self.linearCFE.count_y()
+            y_part_linear = self.partLinearCFE.count_y()
 
-        delta_linear = [abs(y[i] - y_linear[i]) for i in range(len(y))]
-        delta_part_linear = [abs(y[i] - y_part_linear[i]) for i in range(len(y))]
+            delta_linear = [abs(y[i] - y_linear[i]) for i in range(len(y))]
+            delta_part_linear = [abs(y[i] - y_part_linear[i]) for i in range(len(y))]
 
-        self.ui.expMtrTW.clearContents()
-        self.ui.expMtrTW.setRowCount(len(matrix))
-        for i in range(len(matrix)):
-            for j in range(len(matrix[0])):
-                self.ui.expMtrTW.setItem(len(matrix) - i - 1, j, QTableWidgetItem(str(matrix[i][j])))
+            self.ui.expMtrTW.clearContents()
+            self.ui.expMtrTW.setRowCount(len(matrix))
+            for i in range(len(matrix)):
+                for j in range(len(matrix[0])):
+                    self.ui.expMtrTW.setItem(len(matrix) - i - 1, j, QTableWidgetItem(str(matrix[i][j])))
 
-        offset = len(matrix[0])
-        for i in range(len(matrix)):
-            self.ui.expMtrTW.setItem(len(matrix) - i - 1, offset, QTableWidgetItem(str(
-                round(y[i], 2)
-            )))
+            offset = len(matrix[0])
+            for i in range(len(matrix)):
+                self.ui.expMtrTW.setItem(len(matrix) - i - 1, offset, QTableWidgetItem(str(
+                    round(y[i], 2)
+                )))
 
-        offset += 1
-        for i in range(len(matrix)):
-            self.ui.expMtrTW.setItem(len(matrix) - i - 1, offset, QTableWidgetItem(str(
-                round(y_linear[i], 2)
-            )))
-        offset += 1
-        for i in range(len(matrix)):
-            self.ui.expMtrTW.setItem(len(matrix) - i - 1, offset, QTableWidgetItem(str(
-                round(y_part_linear[i], 2)
-            )))
+            offset += 1
+            for i in range(len(matrix)):
+                self.ui.expMtrTW.setItem(len(matrix) - i - 1, offset, QTableWidgetItem(str(
+                    round(y_linear[i], 2)
+                )))
+            offset += 1
+            for i in range(len(matrix)):
+                self.ui.expMtrTW.setItem(len(matrix) - i - 1, offset, QTableWidgetItem(str(
+                    round(y_part_linear[i], 2)
+                )))
 
-        offset += 1
-        for i in range(len(matrix)):
-            self.ui.expMtrTW.setItem(len(matrix) - i - 1, offset, QTableWidgetItem(str(
-                round(delta_linear[i], 2)
-            )))
-        offset += 1
-        for i in range(len(matrix)):
-            self.ui.expMtrTW.setItem(len(matrix) - i - 1, offset, QTableWidgetItem(str(
-                round(delta_part_linear[i], 2)
-            )))
+            offset += 1
+            for i in range(len(matrix)):
+                self.ui.expMtrTW.setItem(len(matrix) - i - 1, offset, QTableWidgetItem(str(
+                    round(delta_linear[i], 2)
+                )))
+            offset += 1
+            for i in range(len(matrix)):
+                self.ui.expMtrTW.setItem(len(matrix) - i - 1, offset, QTableWidgetItem(str(
+                    round(delta_part_linear[i], 2)
+                )))
 
-        normalizer = self.get_normalizer()
-        self.ui.linNormL.setText(self.linearCFE.get_norm_str())
-        self.ui.linDenormL.setText(self.linearCFE.get_nature_str(normalizer))
+            normalizer = self.get_normalizer()
+            self.ui.linNormL.setText(self.linearCFE.get_norm_str())
+            self.ui.linDenormL.setText(self.linearCFE.get_nature_str(normalizer))
 
-        self.ui.partLinNormL.setText(self.partLinearCFE.get_norm_str())
-        self.ui.partLinDenormL.setText(self.partLinearCFE.get_nature_str(normalizer))
+            self.ui.partLinNormL.setText(self.partLinearCFE.get_norm_str())
+            self.ui.partLinDenormL.setText(self.partLinearCFE.get_nature_str(normalizer))
+        except Exception as e:
+            msg = QMessageBox()
+            msg.setIcon(QMessageBox.Critical)
+            msg.setText("Ошибка")
+            msg.setInformativeText(e.__str__())
+            msg.setWindowTitle("Ошибка")
+            msg.exec_()
 
     def lin_check(self):
-        data = self.get_check_data()
-        param = self.get_check_model_params(data)
+        try:
+            data = self.get_check_data()
+            param = self.get_check_model_params(data)
 
-        y_teor = self.linearCFE.get_y(data)
-        y_exp = self.get_exp_check_y(param)
+            y_teor = self.linearCFE.get_y(data)
+            y_exp = self.get_exp_check_y(param)
 
-        self.ui.checkResTeorL.setText(str(round(y_teor, 2)))
-        self.ui.checkResExpL.setText(str(round(y_exp, 2)))
+            self.ui.checkResTeorL.setText(str(round(y_teor, 2)))
+            self.ui.checkResExpL.setText(str(round(y_exp, 2)))
+        except Exception as e:
+            msg = QMessageBox()
+            msg.setIcon(QMessageBox.Critical)
+            msg.setText("Ошибка")
+            msg.setInformativeText(e.__str__())
+            msg.setWindowTitle("Ошибка")
+            msg.exec_()
 
     def part_lin_check(self):
-        data = self.get_check_data()
-        param = self.get_check_model_params(data)
+        try:
+            data = self.get_check_data()
+            param = self.get_check_model_params(data)
 
-        y_teor = self.partLinearCFE.get_y(data)
-        y_exp = self.get_exp_check_y(param)
+            y_teor = self.partLinearCFE.get_y(data)
+            y_exp = self.get_exp_check_y(param)
 
-        self.ui.checkResTeorL.setText(str(round(y_teor, 2)))
-        self.ui.checkResExpL.setText(str(round(y_exp, 2)))
+            self.ui.checkResTeorL.setText(str(round(y_teor, 2)))
+            self.ui.checkResExpL.setText(str(round(y_exp, 2)))
+        except Exception as e:
+            msg = QMessageBox()
+            msg.setIcon(QMessageBox.Critical)
+            msg.setText("Ошибка")
+            msg.setInformativeText(e.__str__())
+            msg.setWindowTitle("Ошибка")
+            msg.exec_()
 
     def get_y(self, matrix: list[list[float]]) -> list[float]:
         y = []

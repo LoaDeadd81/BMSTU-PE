@@ -60,6 +60,9 @@ class PartLinearCFE(LinearCFE):
         return res
 
     def get_y(self, data: list[float]) -> float:
+        if len(self.b) == 0:
+            raise Exception("Сначала нужно рассчитать коэффициенты")
+
         for i in range(len(self.combinations)):
             tmp = 1
 

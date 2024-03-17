@@ -41,6 +41,9 @@ class LinearCFE:
             self.b.append(sum([self.matrix[i][j] * y[i] for i in range(self.N)]) / self.N)
 
     def count_y(self) -> list[float]:
+        if len(self.b) == 0:
+            raise Exception("Сначала нужно рассчитать коэффициенты")
+
         res = []
 
         for i in range(self.N):
@@ -50,6 +53,9 @@ class LinearCFE:
         return res
 
     def get_norm_str(self) -> str:
+        if len(self.b) == 0:
+            raise Exception("Сначала нужно рассчитать коэффициенты")
+
         res = f"{round(self.b[0], 2)}"
 
         for i in range(1, self.factor_num + 1):
@@ -60,6 +66,9 @@ class LinearCFE:
         return res
 
     def get_nature_str(self, normalizer: Normalizer) -> str:
+        if len(self.b) == 0:
+            raise Exception("Сначала нужно рассчитать коэффициенты")
+
         res = f"{round(self.b[0], 2)}"
 
         for i in range(1, self.factor_num + 1):
@@ -73,4 +82,7 @@ class LinearCFE:
         return res
 
     def get_y(self, data: list[float]) -> float:
+        if len(self.b) == 0:
+            raise Exception("Сначала нужно рассчитать коэффициенты")
+
         return self.b[0] + sum([data[j - 1] * self.b[j] for j in range(1, self.b_num)])
