@@ -79,13 +79,23 @@ class LabWindow(QMainWindow):
 
     def lin_check(self):
         data = self.get_check_data()
-        y = self.linearCFE.get_y(data)
-        self.ui.checkResL.setText(str(round(y, 2)))
+        param = self.get_check_model_params(data)
+
+        y_teor = self.linearCFE.get_y(data)
+        y_exp = self.get_exp_check_y(param)
+
+        self.ui.checkResTeorL.setText(str(round(y_teor, 2)))
+        self.ui.checkResExpL.setText(str(round(y_exp, 2)))
 
     def part_lin_check(self):
         data = self.get_check_data()
-        y = self.partLinearCFE.get_y(data)
-        self.ui.checkResL.setText(str(round(y, 2)))
+        param = self.get_check_model_params(data)
+
+        y_teor = self.partLinearCFE.get_y(data)
+        y_exp = self.get_exp_check_y(param)
+
+        self.ui.checkResTeorL.setText(str(round(y_teor, 2)))
+        self.ui.checkResExpL.setText(str(round(y_exp, 2)))
 
     def get_y(self, matrix: list[list[float]]) -> list[float]:
         y = []
@@ -127,3 +137,20 @@ class LabWindow(QMainWindow):
                 self.ui.x2CheckSB.value(),
                 self.ui.x3CheckSB.value(),
                 self.ui.x4CheckSB.value()]
+
+    def get_check_model_params(self, data: list[float]) -> SMOParam:
+        normalizer = self.get_normalizer()
+        mtime = self.ui.mTimeSB.value()
+
+        denorm_param = [normalizer.denormalize(i, data[i]) for i in range(len(data))]
+
+        return SMOParam(denorm_param, mtime)
+
+    def get_exp_check_y(self, param: SMOParam) -> float:
+        res = 0
+
+        for _ in range(REPEAT_NUM):
+            stats, time = runLab1Model(param)
+            res += stats.avg_elem_time.avg()
+
+        return res / REPEAT_NUM
