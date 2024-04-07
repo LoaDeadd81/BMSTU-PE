@@ -237,7 +237,7 @@
            <double>0.100000000000000</double>
           </property>
           <property name="value">
-           <double>6.000000000000000</double>
+           <double>5.500000000000000</double>
           </property>
          </widget>
         </item>
@@ -420,6 +420,12 @@
             <verstretch>0</verstretch>
            </sizepolicy>
           </property>
+          <property name="maximumSize">
+           <size>
+            <width>16777215</width>
+            <height>16777199</height>
+           </size>
+          </property>
           <property name="font">
            <font>
             <pointsize>16</pointsize>
@@ -435,7 +441,7 @@
            <double>0.100000000000000</double>
           </property>
           <property name="value">
-           <double>4.000000000000000</double>
+           <double>4.500000000000000</double>
           </property>
          </widget>
         </item>
@@ -1087,7 +1093,7 @@
          <enum>QFrame::Box</enum>
         </property>
         <property name="text">
-         <string>Нормировный вид</string>
+         <string>Нормализованный вид</string>
         </property>
        </widget>
       </item>
@@ -1159,7 +1165,7 @@
          <enum>QFrame::Box</enum>
         </property>
         <property name="text">
-         <string>Нормировный вид</string>
+         <string>Нормализованный вид</string>
         </property>
        </widget>
       </item>
@@ -1185,7 +1191,7 @@
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>1707</width>
+           <width>1661</width>
            <height>58</height>
           </rect>
          </property>
@@ -1258,7 +1264,7 @@
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>1707</width>
+           <width>1661</width>
            <height>58</height>
           </rect>
          </property>

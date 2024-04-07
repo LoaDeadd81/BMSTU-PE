@@ -38,9 +38,9 @@ class PartLinearCFE(LinearCFE):
             x_str = ''.join([self.alias[j] for j in self.combinations[i]])
             num = self.b[i + self.factor_num + 1]
             if num > 0:
-                res += f' + {round(num, 2)}*{x_str}'
+                res += f' + {round(num, self.round_num)}*{x_str}'
             else:
-                res += f' - {round(abs(num), 2)}*{x_str}'
+                res += f' - {round(abs(num), self.round_num)}*{x_str}'
 
         return res
 
@@ -51,11 +51,12 @@ class PartLinearCFE(LinearCFE):
             x_str = ''.join([self.alias[j] for j in self.combinations[i]])
 
             num = normalizer.denormalize_comb(self.combinations[i], self.b[i + self.factor_num + 1])
+            num *= self.b[i + self.factor_num + 1] / abs(self.b[i + self.factor_num + 1])
 
             if num > 0:
-                res += f' + {round(num, 2)}*{x_str}'
+                res += f' + {round(num, self.round_num)}*{x_str}'
             else:
-                res += f' - {round(abs(num), 2)}*{x_str}'
+                res += f' - {round(abs(num), self.round_num)}*{x_str}'
 
         return res
 

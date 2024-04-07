@@ -9,6 +9,7 @@ class LinearCFE:
         self.N = 2 ** factor_num
         self.b_num = factor_num + 1
         self.b = []
+        self.round_num = 4
 
         self.create_alias()
         self.create_plan_matrix()
@@ -56,28 +57,29 @@ class LinearCFE:
         if len(self.b) == 0:
             raise Exception("Сначала нужно рассчитать коэффициенты")
 
-        res = f"{round(self.b[0], 2)}"
+        res = f"{round(self.b[0], self.round_num)}"
 
         for i in range(1, self.factor_num + 1):
             if self.b[i] > 0:
-                res += f" + {round(self.b[i], 2)}*{self.alias[i - 1]}"
+                res += f" + {round(self.b[i], self.round_num)}*{self.alias[i - 1]}"
             else:
-                res += f" - {round(abs(self.b[i]), 2)}*{self.alias[i - 1]}"
+                res += f" - {round(abs(self.b[i]), self.round_num)}*{self.alias[i - 1]}"
         return res
 
     def get_nature_str(self, normalizer: Normalizer) -> str:
         if len(self.b) == 0:
             raise Exception("Сначала нужно рассчитать коэффициенты")
 
-        res = f"{round(self.b[0], 2)}"
+        res = f"{round(self.b[0], self.round_num)}"
 
         for i in range(1, self.factor_num + 1):
             val = normalizer.denormalize(i - 1, self.b[i])
+            val *= self.b[i] / abs(self.b[i])
 
             if val > 0:
-                res += f" + {round(val, 2)}*{self.alias[i - 1]}"
+                res += f" + {round(val, self.round_num)}*{self.alias[i - 1]}"
             else:
-                res += f" - {round(abs(val), 2)}*{self.alias[i - 1]}"
+                res += f" - {round(abs(val), self.round_num)}*{self.alias[i - 1]}"
 
         return res
 
