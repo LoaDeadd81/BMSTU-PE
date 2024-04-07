@@ -76,6 +76,7 @@ class LabWindow(QMainWindow):
             msg.setWindowTitle("Ошибка")
             msg.exec_()
 
+
     def show_pfe_eq(self):
         normalizer = self.get_normalizer()
         self.ui.linNormL.setText(self.linearCFE.get_norm_str())
@@ -155,8 +156,8 @@ class LabWindow(QMainWindow):
             y_teor = self.linearCFE.get_y(data)
             y_exp = self.get_exp_check_y(param)
 
-            self.ui.checkResTeorL.setText(str(round(y_teor, 2)))
-            self.ui.checkResExpL.setText(str(round(y_exp, 2)))
+            self.ui.checkResTeorL.setText('{:.2f}'.format(y_teor))
+            self.ui.checkResExpL.setText('{:.2f}'.format(y_exp))
         except Exception as e:
             msg = QMessageBox()
             msg.setIcon(QMessageBox.Critical)
@@ -173,8 +174,8 @@ class LabWindow(QMainWindow):
             y_teor = self.partLinearCFE.get_y(data)
             y_exp = self.get_exp_check_y(param)
 
-            self.ui.checkResTeorL.setText(str(round(y_teor, 2)))
-            self.ui.checkResExpL.setText(str(round(y_exp, 2)))
+            self.ui.checkResTeorL.setText('{:.2f}'.format(y_teor))
+            self.ui.checkResExpL.setText('{:.2f}'.format(y_exp))
         except Exception as e:
             msg = QMessageBox()
             msg.setIcon(QMessageBox.Critical)
@@ -191,8 +192,8 @@ class LabWindow(QMainWindow):
             y_teor = self.linearDFE.get_y(data)
             y_exp = self.get_exp_check_y(param)
 
-            self.ui.checkResTeorL.setText(str(round(y_teor, 2)))
-            self.ui.checkResExpL.setText(str(round(y_exp, 2)))
+            self.ui.checkResTeorL.setText('{:.2f}'.format(y_teor))
+            self.ui.checkResExpL.setText('{:.2f}'.format(y_exp))
         except Exception as e:
             msg = QMessageBox()
             msg.setIcon(QMessageBox.Critical)

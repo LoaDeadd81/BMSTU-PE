@@ -10,6 +10,7 @@ class LinearCFE:
         self.b_num = factor_num + 1
         self.b = []
         self.round_num = 4
+        self.format_num = '{:.4f}'
 
         self.create_alias()
         self.create_plan_matrix()
@@ -63,10 +64,12 @@ class LinearCFE:
         res = f"{round(self.b[0], self.round_num)}"
 
         for i in range(1, self.factor_num + 1):
+            num = self.b[i]
+            x_str = self.alias[i - 1]
             if self.b[i] > 0:
-                res += f" + {round(self.b[i], self.round_num)}*{self.alias[i - 1]}"
+                res += ' + ' + self.format_num.format(num) + x_str
             else:
-                res += f" - {round(abs(self.b[i]), self.round_num)}*{self.alias[i - 1]}"
+                res += ' - ' + self.format_num.format(abs(num)) + x_str
         return res
 
     def get_nature_str(self, normalizer: Normalizer) -> str:
@@ -76,13 +79,14 @@ class LinearCFE:
         res = f"{round(self.b[0], self.round_num)}"
 
         for i in range(1, self.factor_num + 1):
-            val = normalizer.denormalize(i - 1, self.b[i])
-            val *= self.b[i] / abs(self.b[i])
+            num = normalizer.denormalize(i - 1, self.b[i])
+            num *= self.b[i] / abs(self.b[i])
+            x_str = self.alias[i - 1]
 
-            if val > 0:
-                res += f" + {round(val, self.round_num)}*{self.alias[i - 1]}"
+            if num > 0:
+                res += ' + ' + self.format_num.format(num) + x_str
             else:
-                res += f" - {round(abs(val), self.round_num)}*{self.alias[i - 1]}"
+                res += ' - ' + self.format_num.format(abs(num)) + x_str
 
         return res
 

@@ -43,9 +43,9 @@ class PartLinearCFE(LinearCFE):
             x_str = ''.join([self.alias[j] for j in self.combinations[i]])
             num = self.b[i + self.factor_num + 1]
             if num > 0:
-                res += f' + {round(num, self.round_num)}*{x_str}'
+                res += ' + ' + self.format_num.format(num) + x_str
             else:
-                res += f' - {round(abs(num), self.round_num)}*{x_str}'
+                res += ' - ' + self.format_num.format(abs(num)) + x_str
 
         return res
 
@@ -59,9 +59,9 @@ class PartLinearCFE(LinearCFE):
             num *= self.b[i + self.factor_num + 1] / abs(self.b[i + self.factor_num + 1])
 
             if num > 0:
-                res += f' + {round(num, self.round_num)}*{x_str}'
+                res += ' + ' + self.format_num.format(num) + x_str
             else:
-                res += f' - {round(abs(num), self.round_num)}*{x_str}'
+                res += ' - ' + self.format_num.format(abs(num)) + x_str
 
         return res
 
