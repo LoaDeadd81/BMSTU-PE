@@ -50,18 +50,45 @@ class PartLinearCFE(LinearCFE):
         return res
 
     def get_nature_str(self, normalizer: Normalizer) -> str:
-        res = super().get_nature_str(normalizer)
+        res = ""
 
-        for i in range(self.b_num - self.factor_num - 1):
-            x_str = ''.join([self.alias[j] for j in self.combinations[i]])
+        zeros = normalizer.zeros
+        intervals = normalizer.intervals
+        coeff = [{x} for x in range(self.factor_num)] + [set(x) for x in self.combinations]
+        combinations = [[x] for x in range(self.factor_num)] + [list(x) for x in self.combinations]
 
-            num = normalizer.denormalize_comb(self.combinations[i], self.b[i + self.factor_num + 1])
-            num *= self.b[i + self.factor_num + 1] / abs(self.b[i + self.factor_num + 1])
+        self.b_nat = [0] * (self.b_num)
+        self.b_nat[0] = self.b[0]
+        for i in range(len(combinations)):
+            tmp = self.b[i + 1]
+            for x in combinations[i]:
+                tmp *= zeros[x] / intervals[x] * -1
+            # if len(combinations[i]) % 2 != 0:
+            #     tmp *= -1
+            self.b_nat[0] += tmp
 
+        res += f'{round(self.b_nat[0], self.round_num)}'
+
+        for i in range(len(combinations)):
+            x_str = ''.join([self.alias[j] for j in combinations[i]])
+
+            num = 0
+            cur_coeff = coeff[i]
+            for j in range(len(coeff)):
+                if cur_coeff.issubset(coeff[j]):
+                    tmp = self.b[j + 1]
+                    for x in (coeff[j] - cur_coeff):
+                        tmp *= zeros[x] * -1
+                    for x in coeff[j]:
+                        tmp /= intervals[x]
+
+                    num += tmp
+
+            self.b_nat[i + 1] = num
             if num > 0:
-                res += ' + ' + self.format_num.format(num) + x_str
+                res += f' + {round(num, self.round_num)}*{x_str}'
             else:
-                res += ' - ' + self.format_num.format(abs(num)) + x_str
+                res += f' - {round(abs(num), self.round_num)}*{x_str}'
 
         return res
 
@@ -78,3 +105,25 @@ class PartLinearCFE(LinearCFE):
             data.append(tmp)
 
         return self.b[0] + sum([data[j - 1] * self.b[j] for j in range(1, self.b_num)])
+
+    def check(self, normalizer: Normalizer) -> bool:
+        eps = 1e-4
+
+        combinations = [[x] for x in range(self.factor_num)] + [list(x) for x in self.combinations]
+
+        for i in range(self.N):
+            y_norm = sum([self.matrix[i][j] * self.b[j] for j in range(self.b_num)])
+            y_nat = self.matrix[i][0] * self.b_nat[0]
+            for j in range(1, self.b_num):
+                x_val = 1
+                for x in combinations[j - 1]:
+                    x_val *= normalizer.denormalize(x, self.matrix[i][x + 1])
+                y_nat += x_val * self.b_nat[j]
+            # y_nat = sum(
+            #     [(normalizer.denormalize(j - 1, self.matrix[i][j]) if j > 0 else self.matrix[i][j]) * self.b_nat[j]
+            #      for j in range(self.b_num)]
+            # )
+            if abs(y_norm - y_nat) > eps:
+                return False
+
+        return True

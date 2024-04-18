@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1872</width>
+    <width>1896</width>
     <height>1020</height>
    </rect>
   </property>
@@ -1240,7 +1240,7 @@
            </font>
           </property>
           <property name="text">
-           <string>Раcсчитать частично линейно</string>
+           <string>Раcсчитать частично нелинейно</string>
           </property>
          </widget>
         </item>
@@ -1453,7 +1453,7 @@
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>1593</width>
+           <width>1617</width>
            <height>58</height>
           </rect>
          </property>
@@ -1579,7 +1579,7 @@
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>1593</width>
+           <width>1617</width>
            <height>58</height>
           </rect>
          </property>
@@ -1644,7 +1644,7 @@
          </font>
         </property>
         <property name="text">
-         <string>Частично линейная</string>
+         <string>Частично нелинейная</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>

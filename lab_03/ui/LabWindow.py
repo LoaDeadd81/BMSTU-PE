@@ -14,7 +14,7 @@ from lab_03.ui.FEData import PFEData, DFEData
 from lab_03.ui.PFEWindow import PFEWindow
 
 FACTOR_NUM = 8
-REPEAT_NUM = 10
+REPEAT_NUM = 20
 # DFE_FACTORS = [1, 2, 3, 4, [1, 2, 3], [1, 2, 4], [2, 3, 4], [1, 3, 4]]
 DFE_FACTORS = [1, [1, 3, 5], 3, [1, 3, 7], 5, [3, 5, 7], 7, [1, 5, 7]]
 
@@ -81,9 +81,11 @@ class LabWindow(QMainWindow):
         normalizer = self.get_normalizer()
         self.ui.linNormL.setText(self.linearCFE.get_norm_str())
         self.ui.linDenormL.setText(self.linearCFE.get_nature_str(normalizer))
+        print(self.linearCFE.check(normalizer))
 
         self.ui.partLinNormL.setText(self.partLinearCFE.get_norm_str())
         self.ui.partLinDenormL.setText(self.partLinearCFE.get_nature_str(normalizer))
+        print(self.partLinearCFE.check(normalizer))
 
     def show_pfe(self):
         try:
@@ -156,8 +158,8 @@ class LabWindow(QMainWindow):
             y_teor = self.linearCFE.get_y(data)
             y_exp = self.get_exp_check_y(param)
 
-            self.ui.checkResTeorL.setText('{:.2f}'.format(y_teor))
-            self.ui.checkResExpL.setText('{:.2f}'.format(y_exp))
+            self.ui.checkResTeorL.setText('{:.4f}'.format(y_teor))
+            self.ui.checkResExpL.setText('{:.4f}'.format(y_exp))
         except Exception as e:
             msg = QMessageBox()
             msg.setIcon(QMessageBox.Critical)
@@ -174,8 +176,8 @@ class LabWindow(QMainWindow):
             y_teor = self.partLinearCFE.get_y(data)
             y_exp = self.get_exp_check_y(param)
 
-            self.ui.checkResTeorL.setText('{:.2f}'.format(y_teor))
-            self.ui.checkResExpL.setText('{:.2f}'.format(y_exp))
+            self.ui.checkResTeorL.setText('{:.4f}'.format(y_teor))
+            self.ui.checkResExpL.setText('{:.4f}'.format(y_exp))
         except Exception as e:
             msg = QMessageBox()
             msg.setIcon(QMessageBox.Critical)
@@ -192,8 +194,8 @@ class LabWindow(QMainWindow):
             y_teor = self.linearDFE.get_y(data)
             y_exp = self.get_exp_check_y(param)
 
-            self.ui.checkResTeorL.setText('{:.2f}'.format(y_teor))
-            self.ui.checkResExpL.setText('{:.2f}'.format(y_exp))
+            self.ui.checkResTeorL.setText('{:.4f}'.format(y_teor))
+            self.ui.checkResExpL.setText('{:.4f}'.format(y_exp))
         except Exception as e:
             msg = QMessageBox()
             msg.setIcon(QMessageBox.Critical)

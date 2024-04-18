@@ -76,17 +76,23 @@ class LinearCFE:
         if len(self.b) == 0:
             raise Exception("Сначала нужно рассчитать коэффициенты")
 
-        res = f"{round(self.b[0], self.round_num)}"
+        self.b_nat = [0] * (self.factor_num + 1)
+        zeros = [0] + normalizer.zeros
+        intervals = [1] + normalizer.intervals
+
+        self.b_nat[0] = self.b[0]
+        for i in range(1, self.factor_num + 1):
+            self.b_nat[0] -= self.b[i] * zeros[i] / intervals[i]
+        res = f"{round(self.b_nat[0], self.round_num)}"
 
         for i in range(1, self.factor_num + 1):
-            num = normalizer.denormalize(i - 1, self.b[i])
-            num *= self.b[i] / abs(self.b[i])
-            x_str = self.alias[i - 1]
+            num = self.b[i] / intervals[i]
+            self.b_nat[i] = num
 
             if num > 0:
-                res += ' + ' + self.format_num.format(num) + x_str
+                res += f" + {round(num, self.round_num)}*{self.alias[i - 1]}"
             else:
-                res += ' - ' + self.format_num.format(abs(num)) + x_str
+                res += f" - {round(abs(num), self.round_num)}*{self.alias[i - 1]}"
 
         return res
 
@@ -95,3 +101,17 @@ class LinearCFE:
             raise Exception("Сначала нужно рассчитать коэффициенты")
 
         return self.b[0] + sum([data[j - 1] * self.b[j] for j in range(1, self.b_num)])
+
+    def check(self, normalizer: Normalizer) -> bool:
+        eps = 1e-4
+
+        for i in range(self.N):
+            y_norm = sum([self.matrix[i][j] * self.b[j] for j in range(self.b_num)])
+            y_nat = sum(
+                [(normalizer.denormalize(j - 1, self.matrix[i][j]) if j > 0 else self.matrix[i][j]) * self.b_nat[j]
+                 for j in range(self.b_num)]
+            )
+            if abs(y_norm - y_nat) > eps:
+                return False
+
+        return True

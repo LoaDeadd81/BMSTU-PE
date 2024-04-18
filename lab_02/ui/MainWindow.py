@@ -205,7 +205,7 @@ class Ui_MainWindow(object):
         self.mTimeSB.setDecimals(4)
         self.mTimeSB.setMaximum(9999999.0)
         self.mTimeSB.setSingleStep(0.1)
-        self.mTimeSB.setProperty("value", 1000.0)
+        self.mTimeSB.setProperty("value", 100.0)
         self.mTimeSB.setObjectName("mTimeSB")
         self.gridLayout.addWidget(self.mTimeSB, 4, 2, 1, 1)
         self.label_20 = QtWidgets.QLabel(self.centralwidget)

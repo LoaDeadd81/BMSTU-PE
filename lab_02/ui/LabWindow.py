@@ -7,7 +7,7 @@ from lab_02.smo.LabModel import SMOParam, runLab1Model
 from lab_02.ui.MainWindow import Ui_MainWindow
 
 FACTOR_NUM = 4
-REPEAT_NUM = 10
+REPEAT_NUM = 20
 
 
 class LabWindow(QMainWindow):
@@ -74,9 +74,16 @@ class LabWindow(QMainWindow):
             normalizer = self.get_normalizer()
             self.ui.linNormL.setText(self.linearCFE.get_norm_str())
             self.ui.linDenormL.setText(self.linearCFE.get_nature_str(normalizer))
+            check_res = self.linearCFE.check(normalizer)
+            if not check_res:
+                raise Exception("Линейная не прошла проверку")
 
             self.ui.partLinNormL.setText(self.partLinearCFE.get_norm_str())
             self.ui.partLinDenormL.setText(self.partLinearCFE.get_nature_str(normalizer))
+            check_res = self.partLinearCFE.check(normalizer)
+            if not check_res:
+                raise Exception("Линейная не прошла проверку")
+
         except Exception as e:
             msg = QMessageBox()
             msg.setIcon(QMessageBox.Critical)
