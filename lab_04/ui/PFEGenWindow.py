@@ -40,7 +40,7 @@ class Ui_PFEWindowGen(object):
         self.expMtrTW.setColumnCount(0)
         self.expMtrTW.setRowCount(0)
         self.expMtrTW.horizontalHeader().setCascadingSectionResizes(True)
-        self.expMtrTW.horizontalHeader().setDefaultSectionSize(180)
+        self.expMtrTW.horizontalHeader().setDefaultSectionSize(80)
         self.expMtrTW.horizontalHeader().setMinimumSectionSize(30)
         self.expMtrTW.horizontalHeader().setSortIndicatorShown(False)
         self.expMtrTW.horizontalHeader().setStretchLastSection(False)
@@ -53,4 +53,4 @@ class Ui_PFEWindowGen(object):
 
     def retranslateUi(self, PFEWindowGen):
         _translate = QtCore.QCoreApplication.translate
-        PFEWindowGen.setWindowTitle(_translate("PFEWindowGen", "Матрица ПФЭ"))
+        PFEWindowGen.setWindowTitle(_translate("PFEWindowGen", "Матрица"))

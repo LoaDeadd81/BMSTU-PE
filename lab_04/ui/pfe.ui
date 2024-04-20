@@ -23,7 +23,7 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>Матрица ПФЭ</string>
+   <string>Матрица</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QVBoxLayout" name="verticalLayout">
@@ -56,7 +56,7 @@
        <number>30</number>
       </attribute>
       <attribute name="horizontalHeaderDefaultSectionSize">
-       <number>180</number>
+       <number>80</number>
       </attribute>
       <attribute name="horizontalHeaderShowSortIndicator" stdset="0">
        <bool>false</bool>

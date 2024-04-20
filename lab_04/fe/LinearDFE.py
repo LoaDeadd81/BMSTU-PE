@@ -3,7 +3,7 @@ from lab_04.fe.LinearCFE import LinearCFE
 
 class LinearDFE(LinearCFE):
     def __init__(self, data):
-        self.dfe_data = data
+        self.dfe_data = data.copy()
 
         dct = {}
         combo_num = 0
@@ -18,7 +18,7 @@ class LinearDFE(LinearCFE):
         for i in range(len(data)):
             if isinstance(data[i], list):
                 for j in range(len(data[i])):
-                    data[i][j] = dct[data[i][j]]
+                    self.dfe_data[i][j] = dct[data[i][j]]
 
         self.expand_plan_matrix()
 

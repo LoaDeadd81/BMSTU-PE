@@ -1,6 +1,6 @@
 from PyQt5.QtWidgets import QMainWindow, QTableWidgetItem
 
-from lab_04.ui.FEData import DFEData
+from lab_04.ui.EData import DFEData
 from lab_04.ui.PFEGenWindow import Ui_PFEWindowGen
 
 
