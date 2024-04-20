@@ -179,19 +179,17 @@ class CFE_OCKP(PartLinearCFE):
         combinations = [[x] for x in range(self.factor_num)] + [list(x) for x in self.combinations]
 
         for i in range(self.N):
-            y_norm = [self.matrix[i][j] * self.b[j] for j in range(self.b_num)]
-            y_nat = [self.matrix[i][0] * self.b_nat[0]]
+            y_norm = sum([self.matrix[i][j] * self.b[j] for j in range(self.b_num)])
+            y_nat = self.matrix[i][0] * self.b_nat[0]
             for j in range(1, self.b_num):
                 x_val = 1
                 for x in combinations[j - 1]:
                     x_val *= normalizer.denormalize(x, self.matrix[i][x + 1])
-                y_nat.append(x_val * self.b_nat[j])
+                y_nat += x_val * self.b_nat[j]
 
-            y_norm_res = sum(y_norm)
-            y_nat_res = sum(y_nat)
-            if abs(y_norm_res - y_nat_res) > eps:
+            if abs(y_norm - y_nat) > eps:
                 print(i)
-                print(y_norm_res, y_nat_res)
+                print(y_norm, y_nat)
                 return False
 
         return True
