@@ -47,4 +47,4 @@ class OCKPWindow(QMainWindow):
                 round(self.ockp_data.delta_y[i], round_num)
             )))
 
-        print(sum(self.ockp_data.delta_y) / len(self.ockp_data.delta_y))
+        print("ocur: ", sum(self.ockp_data.delta_y) / len(self.ockp_data.delta_y))

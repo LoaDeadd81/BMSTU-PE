@@ -890,7 +890,7 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "ПЭ ЛР№3 Вариант 3 (равномерный x 4)"))
+        MainWindow.setWindowTitle(_translate("MainWindow", "ПЭ ЛР№4 Вариант 3 (равномерный x 4)"))
         self.label_9.setText(_translate("MainWindow", "min:"))
         self.label_14.setText(_translate("MainWindow", "Интенсивность поступления 2 (x5)"))
         self.label_3.setText(_translate("MainWindow", "Разброс интенсивность поступления 1 (x2)"))

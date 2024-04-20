@@ -1,14 +1,17 @@
+import multiprocessing as mp
+import time as tm
+
 from PyQt5.QtWidgets import QMainWindow, QMessageBox
 
+from lab_04.fe.CFE_OCKP import CFE_OCKP
 from lab_04.fe.Normalizer import Normalizer
-from lab_04.fe.LinearOCKP import LinearOCKP
 from lab_04.smo.LabModel import SMOParam, runLabModel
 from lab_04.ui.EData import OCKPData
 from lab_04.ui.MainWindow import Ui_MainWindow
 from lab_04.ui.OCKPWindow import OCKPWindow
 
 FACTOR_NUM = 8
-REPEAT_NUM = 20
+REPEAT_NUM = 10
 # DFE_FACTORS = [1, 2, 3, 4, [1, 2, 3], [1, 2, 4], [2, 3, 4], [1, 3, 4]]
 # DFE_FACTORS = [1, [1, 3, 5], 3, [1, 3, 7], 5, [3, 5, 7], 7, [1, 5, 7]]
 DFE_FACTORS = [1, 2, 3, 4, 5, 6, [1, 2, 3, 4], [3, 4, 5, 6]]
@@ -20,7 +23,7 @@ class LabWindow(QMainWindow):
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
 
-        self.ockp = LinearOCKP(DFE_FACTORS)
+        self.ockp = CFE_OCKP(FACTOR_NUM)
 
         self.pfe_data = None
         self.dfe_data = None
@@ -34,7 +37,7 @@ class LabWindow(QMainWindow):
     def count_ockp(self):
         try:
             matrix = self.ockp.get_matrix()
-            y = self.get_y(matrix)
+            y = self.get_y_mp(matrix)
 
             self.ockp.count_b(y)
 
@@ -117,7 +120,35 @@ class LabWindow(QMainWindow):
 
             y.append(tmp_y / REPEAT_NUM)
 
+            print(i / len(matrix))
+
         return y
+
+    def get_y_mp(self, matrix: list[list[float]]) -> list[float]:
+        start = tm.time()
+        params = self.get_model_params(matrix)
+        y = mp.Array('f', [0.0] * len(matrix))
+
+        p_num = 8
+        step = 32
+        ranges = [[i * step, (i + 1) * step] for i in range(8)]
+        processes = [mp.Process(target=count_y, args=(params, ranges[i][0], ranges[i][1], y)) for i in range(p_num)]
+        last_range = [ranges[-1][1], len(matrix)]
+        last_proc = mp.Process(target=count_y, args=(params, last_range[0], last_range[1], y))
+
+        for process in processes:
+            process.start()
+
+        for process in processes:
+            process.join()
+
+        last_proc.start()
+        last_proc.join()
+
+        end = tm.time()
+        print(end - start)
+
+        return y[:]
 
     def get_model_params(self, matrix: list[list[float]]) -> list[SMOParam]:
         res = []
@@ -170,3 +201,13 @@ class LabWindow(QMainWindow):
 
         return res / REPEAT_NUM
 
+
+def count_y(params: list[SMOParam], l: int, r: int, y: list[float]):
+    for i in range(l, r):
+        tmp_y = 0
+
+        for _ in range(REPEAT_NUM):
+            stats, time = runLabModel(params[i])
+            tmp_y += stats.avg_elem_time.avg()
+
+        y[i] = tmp_y / REPEAT_NUM

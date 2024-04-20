@@ -11,8 +11,8 @@ class PartLinearCFE(LinearCFE):
         tmp_list = [i for i in range(factor_num)]
         self.b_num = 1 + sum([len(list(combinations(tmp_list, i))) for i in range(1, factor_num + 1)])
 
-        self.create_combinations()
-        self.expand_plan_matrix()
+        # self.create_combinations()
+        # self.expand_plan_matrix()
 
     def get_alias(self) -> list[str]:
         return (self.alias +
@@ -119,10 +119,6 @@ class PartLinearCFE(LinearCFE):
                 for x in combinations[j - 1]:
                     x_val *= normalizer.denormalize(x, self.matrix[i][x + 1])
                 y_nat += x_val * self.b_nat[j]
-            # y_nat = sum(
-            #     [(normalizer.denormalize(j - 1, self.matrix[i][j]) if j > 0 else self.matrix[i][j]) * self.b_nat[j]
-            #      for j in range(self.b_num)]
-            # )
             if abs(y_norm - y_nat) > eps:
                 return False
 

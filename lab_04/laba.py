@@ -2,8 +2,9 @@ import sys
 
 from PyQt5.QtWidgets import QApplication
 
+from lab_04.fe.CFE_OCKP import CFE_OCKP
 from lab_04.fe.LinearDFE import LinearDFE
-from lab_04.fe.LinearOCKP import LinearOCKP
+from lab_04.fe.LinearDFE_OCKP import LinearDFE_OCKP
 from ui.LabWindow import LabWindow
 
 
@@ -15,11 +16,11 @@ def main():
     # ro = stats.work_time / time
 
     # data = [1, 2, 3, 4, [1, 2, 3], [1, 2, 4], [2, 3, 4], [1, 3, 4]]
-    data = [1, [1, 3, 5], 3, [1, 3, 7], 5, [3, 5, 7], 7, [1, 5, 7]]
-    dfe = LinearDFE(data)
-    mtr = dfe.get_matrix()
+    # data = [1, [1, 3, 5], 3, [1, 3, 7], 5, [3, 5, 7], 7, [1, 5, 7]]
+    # dfe = CFE_OCKP(data)
+    # mtr = dfe.get_matrix()
 
-    ockp = LinearOCKP(data)
+    ockp = CFE_OCKP(8)
     mtr = ockp.get_matrix()
     print()
 

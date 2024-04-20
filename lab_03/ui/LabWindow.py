@@ -14,7 +14,7 @@ from lab_03.ui.FEData import PFEData, DFEData
 from lab_03.ui.PFEWindow import PFEWindow
 
 FACTOR_NUM = 8
-REPEAT_NUM = 20
+REPEAT_NUM = 10
 # DFE_FACTORS = [1, 2, 3, 4, [1, 2, 3], [1, 2, 4], [2, 3, 4], [1, 3, 4]]
 DFE_FACTORS = [1, [1, 3, 5], 3, [1, 3, 7], 5, [3, 5, 7], 7, [1, 5, 7]]
 
