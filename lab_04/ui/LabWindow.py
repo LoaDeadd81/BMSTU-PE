@@ -4,6 +4,7 @@ import time as tm
 from PyQt5.QtWidgets import QMainWindow, QMessageBox
 
 from lab_04.fe.CFE_OCKP import CFE_OCKP
+from lab_04.fe.DFE_OCKP import DFE_OCKP
 from lab_04.fe.Normalizer import Normalizer
 from lab_04.smo.LabModel import SMOParam, runLabModel
 from lab_04.ui.EData import OCKPData
@@ -11,7 +12,7 @@ from lab_04.ui.MainWindow import Ui_MainWindow
 from lab_04.ui.OCKPWindow import OCKPWindow
 
 FACTOR_NUM = 8
-REPEAT_NUM = 10
+REPEAT_NUM = 20
 # DFE_FACTORS = [1, 2, 3, 4, [1, 2, 3], [1, 2, 4], [2, 3, 4], [1, 3, 4]]
 # DFE_FACTORS = [1, [1, 3, 5], 3, [1, 3, 7], 5, [3, 5, 7], 7, [1, 5, 7]]
 DFE_FACTORS = [1, 2, 3, 4, 5, 6, [1, 2, 3, 4], [3, 4, 5, 6]]
@@ -23,6 +24,7 @@ class LabWindow(QMainWindow):
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
 
+        # self.ockp = DFE_OCKP(DFE_FACTORS)
         self.ockp = CFE_OCKP(FACTOR_NUM)
 
         self.pfe_data = None
@@ -38,6 +40,7 @@ class LabWindow(QMainWindow):
         try:
             matrix = self.ockp.get_matrix()
             y = self.get_y_mp(matrix)
+            # y = self.get_y(matrix)
 
             self.ockp.count_b(y)
 

@@ -20,7 +20,7 @@ class LinearDFE(LinearCFE):
                 for j in range(len(data[i])):
                     self.dfe_data[i][j] = dct[data[i][j]]
 
-        self.expand_plan_matrix()
+        self.expand_dfe_matrix()
 
         new_fn = len(data)
         self.factor_num = new_fn
@@ -29,7 +29,7 @@ class LinearDFE(LinearCFE):
 
         super().create_alias()
 
-    def expand_plan_matrix(self):
+    def expand_dfe_matrix(self):
         for i in range(len(self.matrix)):
             row = [1]
             mtr_j = 1
